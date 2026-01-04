@@ -1,0 +1,27 @@
+game-settings:
+  play-time: 780 # 10분
+  jail-time: 30 # 술래 대기 시간
+  item-cooldown: 10 # 아이템 쿨다운 (초)
+  glow-duration: 3 # 발광 지속 시간 (초)
+
+locations:
+  lobby:
+    world: 'world'
+    x: 13
+    y: 231
+    z: -20
+  jail:
+    world: 'world'
+    x: 13
+    y: 227
+    z: 17
+  map-spawn:
+    world: 'world'
+    x: 0
+    y: 2
+    z: 0
+
+messages:
+  game-start: "§e게임이 시작되었습니다! 술래는 잠시 후 풀어집니다."
+  seeker-win: "§c술래가 모든 도망자를 잡았습니다!"
+  runner-win: "§a도망자가 10분간 생존하여 승리했습니다!"

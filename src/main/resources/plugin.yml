@@ -1,0 +1,18 @@
+name: CatchGlow
+version: 'Official-1.0'
+main: CatchGlow.catchGlow.CatchGlow
+api-version: '1.21'
+commands:
+  시작:
+    description: 게임을 시작합니다.
+    permission: catchglow.admin
+  중지:
+    description: 게임을 강제 중지합니다.
+    permission: catchglow.admin
+  cgreload:
+    description: 설정을 리로드합니다.
+    permission: catchglow.admin
+permissions:
+  catchglow.admin:
+    description: 관리자 권한
+    default: op
