@@ -1,5 +1,5 @@
 name: CatchGlow
-version: 'Official-1.0'
+version: '${project.version}'
 main: CatchGlow.catchGlow.CatchGlow
 api-version: '1.21'
 commands:

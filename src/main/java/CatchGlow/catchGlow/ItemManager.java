@@ -49,6 +49,10 @@ public class ItemManager {
         detectorMeta.setUnbreakable(true);
         detector.setItemMeta(detectorMeta);
         player.getInventory().addItem(detector);
+        
+        // Wind Charge (1 Stack)
+        ItemStack windCharge = new ItemStack(Material.WIND_CHARGE, 64);
+        player.getInventory().addItem(windCharge);
     }
 
     public void giveRunnerItems(Player player) {
@@ -62,5 +66,17 @@ public class ItemManager {
         stickMeta.setUnbreakable(true);
         stick.setItemMeta(stickMeta);
         player.getInventory().addItem(stick);
+        
+        // Wind Charge (10)
+        ItemStack windCharge = new ItemStack(Material.WIND_CHARGE, 10);
+        player.getInventory().addItem(windCharge);
+        
+        // Position Swapper (Redstone Repeater)
+        ItemStack swapper = new ItemStack(Material.REPEATER);
+        ItemMeta swapperMeta = swapper.getItemMeta();
+        swapperMeta.setDisplayName("§d대혼란 위치 변환기");
+        swapperMeta.setLore(Arrays.asList("§7우클릭 시 모든 플레이어의 위치가 뒤섞입니다!", "§c1회용"));
+        swapper.setItemMeta(swapperMeta);
+        player.getInventory().addItem(swapper);
     }
 }

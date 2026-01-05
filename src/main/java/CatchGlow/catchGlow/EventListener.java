@@ -21,7 +21,10 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -44,6 +47,52 @@ public class EventListener implements Listener {
         if (!gameManager.isRunning()) return;
 
         Player player = event.getPlayer();
+        
+        // 도망자 아이템 사용 (위치 변환기 - 레드스톤 중계기)
+        if (playerManager.isRunner(player)) {
+            if (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) {
+                if (event.getItem() != null && event.getItem().getType() == Material.REPEATER) {
+                    event.setCancelled(true); // 설치 방지
+                    
+                    List<Player> allPlayers = new ArrayList<>();
+                    for (Player p : Bukkit.getOnlinePlayers()) {
+                        if (p.getGameMode() == GameMode.SURVIVAL) {
+                            allPlayers.add(p);
+                        }
+                    }
+                    
+                    if (allPlayers.size() < 2) {
+                        player.sendMessage(ChatColor.RED + "위치를 섞을 플레이어가 부족합니다.");
+                        return;
+                    }
+                    
+                    // 현재 위치들 저장
+                    List<Location> locations = new ArrayList<>();
+                    for (Player p : allPlayers) {
+                        locations.add(p.getLocation());
+                    }
+                    
+                    // 위치 섞기 (자기 위치가 안 걸리도록 셔플)
+                    // 간단하게 Collections.shuffle을 쓰면 자기 위치가 걸릴 수도 있음.
+                    // 완전 순열(Derangement)까지는 아니더라도 그냥 섞어서 이동시킴.
+                    Collections.shuffle(locations);
+                    
+                    for (int i = 0; i < allPlayers.size(); i++) {
+                        Player p = allPlayers.get(i);
+                        p.teleport(locations.get(i));
+                        p.sendMessage(ChatColor.LIGHT_PURPLE + "누군가에 의해 위치가 뒤섞였습니다!");
+                        p.playSound(p.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1f, 1f);
+                    }
+                    
+                    Bukkit.broadcastMessage(ChatColor.GOLD + ">>> " + player.getName() + "님이 대혼란 위치 변환기를 사용했습니다! <<<");
+                    
+                    event.getItem().setAmount(event.getItem().getAmount() - 1);
+                }
+            }
+            return;
+        }
+
+        // 술래 아이템 사용
         if (!playerManager.isSeeker(player)) return;
 
         if (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) {

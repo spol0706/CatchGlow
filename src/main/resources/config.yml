@@ -1,5 +1,5 @@
 game-settings:
-  play-time: 780 # 10분
+  play-time: 600 # 10분
   jail-time: 30 # 술래 대기 시간
   item-cooldown: 10 # 아이템 쿨다운 (초)
   glow-duration: 3 # 발광 지속 시간 (초)
