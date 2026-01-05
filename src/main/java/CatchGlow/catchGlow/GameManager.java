@@ -152,9 +152,9 @@ public class GameManager {
                     this.cancel();
                 }
                 
-                // 30초 남았을 때 이벤트
-                if (timeLeft == 30) {
-                    Bukkit.broadcastMessage(ChatColor.RED + "게임 종료 30초 전! 모든 플레이어가 발광 상태가 되며, 술래가 강력해집니다!");
+                // 60초 남았을 때 이벤트 (1분)
+                if (timeLeft == 60) {
+                    Bukkit.broadcastMessage(ChatColor.RED + "게임 종료 1분 전! 모든 플레이어가 발광 상태가 되며, 술래가 강력해집니다!");
                     
                     // 술래에게 신속 2, 점프 강화 2, 힘 3 부여
                     for (UUID uuid : playerManager.getSeekers()) {

@@ -54,8 +54,16 @@ public class EventListener implements Listener {
                 if (event.getItem() != null && event.getItem().getType() == Material.REPEATER) {
                     event.setCancelled(true); // 설치 방지
                     
+                    // 술래가 풀리기 전에는 사용 불가
+                    if (!gameManager.isSeekerReleased()) {
+                        player.sendMessage(ChatColor.RED + "술래가 풀려나기 전에는 사용할 수 없습니다!");
+                        return;
+                    }
+                    
                     List<Player> allPlayers = new ArrayList<>();
                     for (Player p : Bukkit.getOnlinePlayers()) {
+                        // 서바이벌 모드인 플레이어(생존자)만 포함
+                        // 관전자(SPECTATOR)는 제외됨
                         if (p.getGameMode() == GameMode.SURVIVAL) {
                             allPlayers.add(p);
                         }
@@ -72,9 +80,7 @@ public class EventListener implements Listener {
                         locations.add(p.getLocation());
                     }
                     
-                    // 위치 섞기 (자기 위치가 안 걸리도록 셔플)
-                    // 간단하게 Collections.shuffle을 쓰면 자기 위치가 걸릴 수도 있음.
-                    // 완전 순열(Derangement)까지는 아니더라도 그냥 섞어서 이동시킴.
+                    // 위치 섞기
                     Collections.shuffle(locations);
                     
                     for (int i = 0; i < allPlayers.size(); i++) {
